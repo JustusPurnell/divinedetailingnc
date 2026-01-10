@@ -83,24 +83,26 @@
     }
 
     /* FIX: logo fits inside the bar (your 225px was blowing it up) */
-    .logo{
-      position:absolute;
-      left:10px;                /* a bit more left */
-      top:50%;
-      transform:translateY(-50%);
-      display:flex;
-      align-items:center;
-      height:100%;
-    }
+ .logo{
+  position:absolute;
+  left:-8px;                 /* closer to the left edge */
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  align-items:center;
+  height:100%;
+}
 
-    .logo img{
-      height:150px;              /* fits a 78px nav cleanly */
-      width:auto;
-      display:block;
-      object-fit:contain;
-      transform:scale(1.18);    /* fills out the empty space inside your PNG */
-      transform-origin:left center;
-    }
+.logo img{
+  height:70px;               /* fits inside 78px bar */
+  width:auto;
+  display:block;
+  object-fit:contain;
+  transform:scale(1.25);     /* makes the logo itself look bigger */
+  transform-origin:left center;
+}
+
+
 
     .nav__links{
       list-style:none;
@@ -358,9 +360,10 @@
       <nav>
         <ul class="nav__links">
           <li><a href="home.html">Home</a></li>
+           <li><a href="services.html">Services</a></li>
+           <li><a href="testimonials.html">Testimonials</a></li>
           <li><a href="about.html">About Us</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="testimonials.html">Testimonials</a></li>
+        
         </ul>
       </nav>
     </div>

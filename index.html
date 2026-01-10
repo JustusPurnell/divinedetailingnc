@@ -30,7 +30,6 @@
     body{font-family:'Inter',sans-serif;background:var(--clr-dark);color:var(--clr-light);}
     a{text-decoration:none;color:inherit;}
 
-    /* ---------- HERO ---------- */
     header.hero{
       background:url('images/int.png') center 65% / cover no-repeat;
       position:relative;
@@ -61,13 +60,15 @@
       pointer-events:none;
     }
 
-    /* ---------- NAV BAR ---------- */
     .nav{
       position:relative;
       z-index:3;
-      margin:18px auto 0;
-      width:min(1100px, calc(100% - 32px));
-      height:70px;
+
+      margin:18px 16px 0;
+      width:calc(100% - 32px);
+      max-width:none;
+
+      height:78px;
       padding:0 18px;
       display:flex;
       align-items:center;
@@ -81,24 +82,60 @@
       box-shadow:var(--glass-shadow);
     }
 
+    /* FIX: logo fits inside the bar (your 225px was blowing it up) */
     .logo{
       position:absolute;
-      left:14px;
+      left:10px;                /* a bit more left */
       top:50%;
       transform:translateY(-50%);
       display:flex;
       align-items:center;
-      gap:.6rem;
+      height:100%;
     }
-    .logo img{height:64px;width:auto;display:block;}
+
+    .logo img{
+      height:64px;              /* fits a 78px nav cleanly */
+      width:auto;
+      display:block;
+      object-fit:contain;
+      transform:scale(1.18);    /* fills out the empty space inside your PNG */
+      transform-origin:left center;
+    }
 
     .nav__links{
       list-style:none;
-      display:flex;
-      gap:2.25rem;
-      font-weight:600;
-      font-size:.98rem;
+      font-weight:700;
+      font-size:1rem;
       letter-spacing:.2px;
+
+      position:absolute;
+      left:10px; right:10px;
+      top:88px;
+      padding:18px 18px 22px;
+      border-radius:22px;
+
+      background:rgba(20,20,22,.92);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow:0 22px 60px rgba(0,0,0,.55);
+
+      display:flex;
+      flex-direction:column;
+      gap:1.1rem;
+      text-align:center;
+
+      transform:translateY(-12px);
+      opacity:0;
+      pointer-events:none;
+      transition:.25s ease;
+      z-index:120;
+    }
+
+    .nav.open .nav__links{
+      transform:translateY(0);
+      opacity:1;
+      pointer-events:auto;
     }
 
     .nav__links li a{
@@ -108,20 +145,7 @@
       position:relative;
     }
     .nav__links li a:hover{opacity:1;}
-    .nav__links li a::after{
-      content:"";
-      position:absolute;
-      left:0;
-      bottom:-8px;
-      width:0;
-      height:2px;
-      background:rgba(255,255,255,.75);
-      transition:.25s ease;
-      border-radius:2px;
-    }
-    .nav__links li a:hover::after{width:100%;}
 
-    /* ---------- CALL BUTTONS ---------- */
     .call-btn{
       position:absolute;
       right:14px;
@@ -141,6 +165,7 @@
       font-weight:700;
       color:#fff;
       transition:.25s ease;
+      z-index:125;
     }
     .call-btn:hover{
       background:rgba(255,255,255,.14);
@@ -151,9 +176,8 @@
     .call-desktop{font-size:.92rem;}
     .call-mobile{display:none;width:46px;height:46px;padding:0;justify-content:center;}
 
-    /* ---------- HAMBURGER (NO CIRCLE / NO TAP BUBBLE) ---------- */
     .nav-toggle{
-      display:none;
+      display:flex;
       background:transparent !important;
       border:none !important;
       border-radius:0 !important;
@@ -163,7 +187,7 @@
       margin:0 !important;
 
       position:absolute;
-      right:16px;
+      right:18px;
       top:50%;
       transform:translateY(-50%);
       z-index:130;
@@ -197,7 +221,6 @@
     .nav.open .nav-toggle span:nth-child(2){ opacity:0; }
     .nav.open .nav-toggle span:nth-child(3){ transform:translateY(-8px) rotate(-45deg); }
 
-    /* ---------- HERO CONTENT ---------- */
     .hero-content{
       position:relative;
       z-index:2;
@@ -279,7 +302,6 @@
       letter-spacing:.2px;
     }
 
-    /* ----- ADDED: STARS (ONLY ADDITION) ----- */
     .stars{
       display:flex;
       justify-content:center;
@@ -292,57 +314,28 @@
       fill:currentColor;
     }
 
-    /* ---------- RESPONSIVE ---------- */
     @media(max-width:900px){
       .hero-content h1{font-size:3.6rem;}
       .hero-content p{font-size:1.2rem;}
-      .nav__links{gap:1.6rem;}
+
+      .logo img{
+        height:56px;
+        transform:scale(1.12);
+      }
     }
 
     @media(max-width:600px){
       header.hero{background-position:center 60%;}
-      .logo img{height:52px;}
 
-      /* UI-only: hide call buttons on mobile */
       .call-desktop,
       .call-mobile{display:none !important;}
 
-      /* show hamburger on mobile */
-      .nav-toggle{display:flex;}
+      .nav-toggle{right:16px;}
 
-      /* mobile menu panel */
-      .nav__links{
-        position:absolute;
-        left:10px; right:10px;
-        top:78px;
-        padding:18px 18px 22px;
-        border-radius:22px;
-
-        background:rgba(20,20,22,.92);
-        border:1px solid rgba(255,255,255,.12);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        box-shadow:0 22px 60px rgba(0,0,0,.55);
-
-        display:flex;
-        flex-direction:column;
-        gap:1.1rem;
-        text-align:center;
-
-        transform:translateY(-12px);
-        opacity:0;
-        pointer-events:none;
-        transition:.25s ease;
-        z-index:120;
+      .logo img{
+        height:50px;
+        transform:scale(1.08);
       }
-
-      .nav.open .nav__links{
-        transform:translateY(0);
-        opacity:1;
-        pointer-events:auto;
-      }
-
-      .nav__links li a::after{display:none;}
 
       .hero-content h1{font-size:2.9rem;}
       .hero-content p{font-size:1.05rem;}
@@ -354,7 +347,7 @@
 <body>
   <header class="hero">
     <div class="nav">
-      <a href="home.html" class="logo"><img src="images/detaillogo.png" alt="We Detail NC logo"></a>
+      <a href="home.html" class="logo"><img src="images/dd2.png" alt="We Detail NC logo"></a>
 
       <button class="nav-toggle" aria-label="Toggle menu" type="button">
         <span></span>
@@ -370,36 +363,12 @@
           <li><a href="testimonials.html">Testimonials</a></li>
         </ul>
       </nav>
-
-      <a class="call-btn call-desktop" href="tel:9199393930">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-             style="vertical-align:-3px;">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07
-                   19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18
-                   2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72 12.31 12.31 0 0 0 .7 2.81
-                   2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27
-                   a2 2 0 0 1 2.11-.45 12.31 12.31 0 0 0 2.81.7
-                   2 2 0 0 1 1.72 2z"/>
-        </svg>
-        (919) 939-3930
-      </a>
-
-      <a class="call-btn call-mobile" href="tel:9199393930" aria-label="Call">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07
-                   19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18
-                   2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72 12.31 12.31 0 0 0 .7 2.81
-                   2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27
-                   a2 2 0 0 1 2.11-.45 12.31 12.31 0 0 0 2.81.7
-                   2 2 0 0 1 1.72 2z"/>
-        </svg>
-      </a>
     </div>
 
     <div class="hero-content">
-      <h1>Mobile Car Detailing in Raleigh</h1>
+      <h1>Mobile Auto Detailing</h1>
+      <h1>Raleigh, NC</h1>
+
       <p>Premium detailing delivered to you.</p>
 
       <div class="cta-row">
@@ -430,6 +399,10 @@
 
       document.querySelectorAll('.nav__links a').forEach(link => {
         link.addEventListener('click', () => navBar.classList.remove('open'));
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!navBar.contains(e.target)) navBar.classList.remove('open');
       });
     });
   </script>
